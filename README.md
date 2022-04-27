@@ -48,7 +48,7 @@ Playstore app: https://play.google.com/store/apps/details?id=com.bikcrum.circula
 
 # How to use
 
-### Add root build.gradle (Project)
+### root build.gradle (Project)
 ```
 allprojects {
     repositories {
@@ -59,7 +59,7 @@ allprojects {
 }
 ```
 
-### Add build.gradle (Module)
+### build.gradle (Module)
 ```
 dependencies {
     ...
