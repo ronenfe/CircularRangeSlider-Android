@@ -1,6 +1,5 @@
 package com.bikcrum.circularrangeslider;
 
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.ColorStateList;
@@ -81,11 +80,7 @@ public class CircularRangeSlider extends View {
     private final String TAG = "demo";
 
     private int getCircleColor() {
-        if (isEnabled()) {
-            return circleColor;
-        } else {
-            return Color.parseColor("#eeeeee");
-        }
+        return circleColor;
     }
 
     public void setAxisColor(int axisColor) {
@@ -122,9 +117,6 @@ public class CircularRangeSlider extends View {
     }
 
     public void setProgress(float progress) {
-        if (!isEnabled()) {
-            return;
-        }
         this.progress = progress;
         invalidate();
     }
@@ -151,6 +143,8 @@ public class CircularRangeSlider extends View {
         if (onRangeChangeListener != null) {
             onRangeChangeListener.onRangeChange(startIndex, endIndex);
         }
+        setStartIndex(startIndex);
+        setEndIndex(endIndex);
         invalidate();
     }
 
@@ -171,11 +165,7 @@ public class CircularRangeSlider extends View {
     }
 
     private int getBorderColor() {
-        if (isEnabled()) {
-            return borderColor;
-        } else {
-            return Color.parseColor("#e2e2e2");
-        }
+        return borderColor;
     }
 
     public void setBorderColor(int borderColor) {
@@ -184,11 +174,7 @@ public class CircularRangeSlider extends View {
     }
 
     private int getSectorColor() {
-        if (isEnabled()) {
-            return sectorColor;
-        } else {
-            return Color.parseColor("#26797979");
-        }
+        return sectorColor;
     }
 
     public void setSectorColor(int sectorColor) {
@@ -246,11 +232,7 @@ public class CircularRangeSlider extends View {
     }
 
     private int getStartIndexStepColor() {
-        if (isEnabled()) {
-            return startIndexStepColor;
-        } else {
-            return Color.WHITE;
-        }
+        return startIndexStepColor;
     }
 
     public void setStartIndexStepColor(int startIndexStepColor) {
@@ -267,11 +249,7 @@ public class CircularRangeSlider extends View {
     }
 
     private int getProgressColor() {
-        if (isEnabled()) {
-            return progressColor;
-        } else {
-            return Color.WHITE;
-        }
+        return progressColor;
     }
 
     private void setProgressColor(int progressColor) {
@@ -285,7 +263,7 @@ public class CircularRangeSlider extends View {
     }
 
     public void setStartIndex(int startIndex) {
-        endIndex = Math.min(Math.max(startIndex, 0), max);
+        startIndex = Math.min(Math.max(startIndex, 0), max);
         this.startIndex = startIndex;
         startThumbAngle = startAngle + (startIndex * stepsGap);
         endThumbAngle = startAngle + (endIndex * stepsGap);
@@ -546,7 +524,7 @@ public class CircularRangeSlider extends View {
 
         //progress
         paint.setStyle(Paint.Style.FILL);
-        if (progressEnabled && isEnabled()) {
+        if (progressEnabled) {
             float angRad = (float) Math.toRadians(startAngle + (progress * stepsGap));
             float stopX = centerX + (float) ((radius * progressLength) * Math.cos(angRad));
             float stopY = centerY + (float) ((radius * progressLength) * Math.sin(angRad));
@@ -562,11 +540,7 @@ public class CircularRangeSlider extends View {
     }
 
     private int getAxisColor() {
-        if (isEnabled()) {
-            return axisColor;
-        } else {
-            return Color.parseColor("#ffffff");
-        }
+        return axisColor;
     }
 
     private boolean touchedOnStartThumb;
@@ -767,16 +741,12 @@ public class CircularRangeSlider extends View {
 
     private int getSliderColor(boolean pressed) {
         if (sliderColor == null) {
-            if (isEnabled()) {
-                if (pressed) {
-                    return Color.parseColor("#e3fae6ab");
-                }
-                return Color.parseColor("#e3ffca28");
-            } else {
-                return Color.parseColor("#eeeeee");
+            if (pressed) {
+                return Color.parseColor("#e3fae6ab");
             }
+            return Color.parseColor("#e3ffca28");
         } else {
-            mTempStates[0] = isEnabled() ? android.R.attr.state_enabled : -android.R.attr.state_enabled;
+            mTempStates[0] = android.R.attr.state_enabled;
             mTempStates[1] = pressed ? android.R.attr.state_pressed : -android.R.attr.state_pressed;
             return sliderColor.getColorForState(mTempStates, 0);
         }
